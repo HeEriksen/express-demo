@@ -3,7 +3,18 @@ import HTTP_CODES from "./utils/httpCodes.mjs";
 
 const server = express();
 const port = process.env.PORT || 8080;
-const quotes = []
+const quotes = [
+    "Be yourself; everyone else is already taken.<br>- Oscar Wilde",
+    "So many books, so little time<br>- Frank Zappa", 
+    "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.<br>- Albert Einstein",
+    "Be the change that you wish to see in the world.<br>- Mahatma Gandhi",
+    "In three words I can sum up everything I've learned about life: it goes on.<br>- Robert Frost",
+    "If you tell the truth, you don't have to remember anything.<br>- Mark Twain",
+    "A room without books is like a body without a soul.<br>- Marcus Tullius Cicero",
+    "You only live once, but if you do it right, once is enough.<br>- Mae West",
+    "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.<br>- Ralph Waldo Emerson",
+    "I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.<br>- Maya Angelou"];
+
 const poem = `Lykke<br><br>
 Hva lykke er?<br>
 Gå på en gressgrodd setervei<br>
@@ -28,9 +39,13 @@ function getRoot(req, res, next) {
   res.status(HTTP_CODES.SUCCESS.OK).send("Hello World").end();
 }
 
+
 server.get("/", getRoot);
 server.get("/tmp/poem", (req, res) => {
   res.send(poem);
+});
+server.get("/tmp/quote", (req, res) => {
+  res.send(quotes[Math.floor(Math.random() * quotes.length)]);
 });
 
 server.listen(server.get("port"), function () {
