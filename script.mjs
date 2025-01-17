@@ -34,6 +34,7 @@ Men ennå ikke kjenne deg.<br>`;
 
 server.set("port", port);
 server.use(express.static("public"));
+server.use(express.json());
 
 function getRoot(req, res, next) {
   res.status(HTTP_CODES.SUCCESS.OK).send("Hello World").end();
@@ -46,6 +47,14 @@ server.get("/tmp/poem", (req, res) => {
 });
 server.get("/tmp/quote", (req, res) => {
   res.send(quotes[Math.floor(Math.random() * quotes.length)]);
+});
+
+server.post("/tmp/sum/:a/:b", (req, res) => {
+    
+    const a = parseInt(req.params.a);
+    const b = parseInt(req.params.b);
+    const sum = a + b;
+    res.send(sum.toString());
 });
 
 server.listen(server.get("port"), function () {
