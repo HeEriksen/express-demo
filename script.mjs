@@ -1,13 +1,13 @@
 import express from "express";
-import path from "path";
+// import path from "path";
 import HTTP_CODES from "./utils/httpCodes.mjs";
 import { quotes, poem } from "./quotes_poem.mjs";
-import { makeNewDeck, shuffleDeck } from "./cards.mjs";
+import { makeNewDeck, shuffleDeck, drawCard } from "./cards.mjs";
 import { v4 as uuidv4 } from "uuid";
 
 const server = express();
 const port = process.env.PORT || 8080;
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 
 const decks = {};
 
@@ -19,8 +19,6 @@ function getRoot(req, res, next) {
   res.status(HTTP_CODES.SUCCESS.OK).send("Hello World").end();
 }
 server.get("/", getRoot);
-
-
 
 server.get("/tmp/poem", (req, res) => {
   res.send(poem);
@@ -36,24 +34,20 @@ server.post("/tmp/sum/:a/:b", (req, res) => {
   res.send(sum.toString());
 });
 
-const serveDrawCards = (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "drawCards.html"));
-};
+// const serveDrawCards = (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "drawCards.html"));
+// };
 
-server.get("/temp/deck*", serveDrawCards);
-
+// server.get("/temp*", serveDrawCards);
 
 server.post("/temp/deck", (req, res) => {
   const deck = makeNewDeck();
   decks[deck.id] = deck.cards;
-  console.log("deck created:", deck);
-  console.log("decks:", decks);
   res.send(deck);
 });
 
 server.patch("/temp/deck/shuffle/:deck_id", (req, res) => {
   const deckID = req.params.deck_id;
-  console.log("shuffling deck with ID:", deckID);
   const cards = decks[deckID];
   if (!cards) {
     return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send("No cards found");
@@ -64,12 +58,22 @@ server.patch("/temp/deck/shuffle/:deck_id", (req, res) => {
 
 server.get("/temp/deck/:deck_id", (req, res) => {
   const deckID = req.params.deck_id;
-  console.log("getting deck with ID:", deckID);
   const cards = decks[deckID];
   if (!cards) {
     return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send("No cards found");
   }
   res.send(decks[deckID]);
+});
+
+server.get("/temp/deck/:deck_id/card",(req,res)=>{
+  const deckID = req.params.deck_id;
+  const cards = decks[deckID];
+  const drawnCard = drawCard(cards);
+
+  if (!cards) {
+    return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send("No cards found");
+  }
+  res.send(drawnCard);
 });
 
 server.listen(server.get("port"), function () {
