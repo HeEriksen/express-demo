@@ -1,5 +1,5 @@
 import express from "express";
-// import path from "path";
+import path from "path";
 import HTTP_CODES from "./utils/httpCodes.mjs";
 import { quotes, poem } from "./quotes_poem.mjs";
 import { makeNewDeck, shuffleDeck, drawCard } from "./cards.mjs";
@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const server = express();
 const port = process.env.PORT || 8080;
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 const decks = {};
 
@@ -34,11 +34,11 @@ server.post("/tmp/sum/:a/:b", (req, res) => {
   res.send(sum.toString());
 });
 
-// const serveDrawCards = (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "drawCards.html"));
-// };
+const serveDrawCards = (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "drawCards.html"));
+};
 
-// server.get("/temp*", serveDrawCards);
+server.get("/temp/deck*", serveDrawCards);
 
 server.post("/temp/deck", (req, res) => {
   const deck = makeNewDeck();
