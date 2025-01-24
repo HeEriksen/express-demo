@@ -38,7 +38,7 @@ const serveDrawCards = (req, res) => {
   res.sendFile(path.join(__dirname, "public", "drawCards.html"));
 };
 
-server.get("/temp/deck*", serveDrawCards);
+server.get("/temp/deck", serveDrawCards);
 
 server.post("/temp/deck", (req, res) => {
   const deck = makeNewDeck();
@@ -62,10 +62,10 @@ server.get("/temp/deck/:deck_id", (req, res) => {
   if (!cards) {
     return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send("No cards found");
   }
-  res.send(decks[deckID]);
+  res.json(cards);
 });
 
-server.get("/temp/deck/:deck_id/card",(req,res)=>{
+server.get("/temp/deck/:deck_id/card", (req, res) => {
   const deckID = req.params.deck_id;
   const cards = decks[deckID];
   const drawnCard = drawCard(cards);

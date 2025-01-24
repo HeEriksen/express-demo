@@ -8,7 +8,7 @@ const quotes = [
   "A room without books is like a body without a soul.<br>- Marcus Tullius Cicero",
   "You only live once, but if you do it right, once is enough.<br>- Mae West",
   "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.<br>- Ralph Waldo Emerson",
-  "I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.<br>- Maya Angelou",
+  "I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.<br>- Maya Angelou"
 ];
 
 const poem = `Lykke<br><br>

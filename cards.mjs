@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 function makeNewDeck() {
-  const suits = ["hjerter", "ruter", "kløver", "spar"];
+  const suits = ["hearts", "diamonds", "clubs", "spades"];
   const values = [
     "2",
     "3",
