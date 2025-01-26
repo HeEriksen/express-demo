@@ -37,13 +37,13 @@ function shuffleDeck(deck) {
   return deck;
 }
 
-function drawCard(deck){
-    if (deck.length === 0) {
-        return "No cards left in the deck";
-      }
-      const randomIndex = Math.floor(Math.random() * deck.length);
-      const drawnCard = deck.splice(randomIndex, 1)[0];
-      return drawnCard;
+function drawCard(deck) {
+  if (deck.length === 0) {
+    return "No cards left in the deck";
+  }
+  const randomIndex = Math.floor(Math.random() * deck.length);
+  const drawnCard = deck.splice(randomIndex, 1)[0];
+  return drawnCard;
 }
 
 export { makeNewDeck, shuffleDeck, drawCard };

@@ -2,8 +2,7 @@ import express from "express";
 import path from "path";
 import HTTP_CODES from "./utils/httpCodes.mjs";
 import { quotes, poem } from "./quotes_poem.mjs";
-import { makeNewDeck, shuffleDeck, drawCard } from "./cards.mjs";
-import { v4 as uuidv4 } from "uuid";
+import { makeNewDeck, shuffleDeck, drawCard } from "./card_functions.mjs";
 
 const server = express();
 const port = process.env.PORT || 8080;
