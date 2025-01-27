@@ -12,16 +12,16 @@ function makeNewDeck() {
     "8",
     "9",
     "10",
-    "J",
-    "Q",
-    "K",
-    "A",
+    "Jack",
+    "Queen",
+    "King",
+    "Ace",
   ];
 
   const deck = suits.flatMap((suit) =>
     values.map((value) => ({ value, suit }))
   );
-  const deckWithID = { id: uuidv4(), cards: deck };
+  const deckWithID = { id: uuidv4(), cards: deck};
   console.log(deckWithID);
   return deckWithID;
 }

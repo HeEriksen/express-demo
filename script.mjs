@@ -68,6 +68,7 @@ server.get("/temp/deck/:deck_id/card", (req, res) => {
   const deckID = req.params.deck_id;
   const cards = decks[deckID];
   const drawnCard = drawCard(cards);
+  const img = drawnCard.value+"_of_"+drawnCard.suit+".png";
 
   if (!cards) {
     return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send("No cards found");

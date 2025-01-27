@@ -76,7 +76,8 @@
         if (resp.ok) {
           let data = await resp.json();
           console.log(data);
-          viewContainer.innerHTML = `You drew the ${data.value} of ${data.suit}`;
+          viewContainer.innerHTML = `<p>You drew the ${data.value} of ${data.suit}</p><br>
+          <img src="./img/card_images/${data.value}_of_${data.suit}.png" alt="${data.value} of ${data.suit}">`;
         } else {
           console.error(`HTTP error! status: ${resp.status}`);
           viewContainer.innerHTML =
