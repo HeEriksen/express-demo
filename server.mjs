@@ -3,14 +3,21 @@ import path from "path";
 import HTTP_CODES from "./utils/httpCodes.mjs";
 import { quotes, poem } from "./quotes_poem.mjs";
 import { makeNewDeck, shuffleDeck, drawCard } from "./card_functions.mjs";
+import log from "./modules/log.mjs";
+import { LOGG_LEVELS } from "./modules/log.mjs";
+
+const ENABLE_LOGGING = false;
 
 const server = express();
 const port = process.env.PORT || 8080;
 const __dirname = path.resolve();
 
+const logger = log(LOGG_LEVELS.VERBOSE);
+
 const decks = {};
 
 server.set("port", port);
+server.use(logger);
 server.use(express.static("public"));
 server.use(express.json());
 
@@ -18,6 +25,8 @@ function getRoot(req, res, next) {
   res.status(HTTP_CODES.SUCCESS.OK).send("Hello World").end();
 }
 server.get("/", getRoot);
+
+// server.use(log);
 
 server.get("/tmp/poem", (req, res) => {
   res.send(poem);
@@ -68,7 +77,7 @@ server.get("/temp/deck/:deck_id/card", (req, res) => {
   const deckID = req.params.deck_id;
   const cards = decks[deckID];
   const drawnCard = drawCard(cards);
-  const img = drawnCard.value+"_of_"+drawnCard.suit+".png";
+  const img = drawnCard.value + "_of_" + drawnCard.suit + ".png";
 
   if (!cards) {
     return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send("No cards found");
