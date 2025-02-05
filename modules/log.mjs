@@ -11,9 +11,9 @@ export const LOGG_LEVELS = {
 let currentGlobalLogLevel = LOGG_LEVELS.VERBOSE;
 
 let logInstance = async (req, res, next) => {
-  await logVerbose(req, res), 
-  await logImportant(req, res), 
-  await logAlways(req, res);
+  await logVerbose(req, res),
+    await logImportant(req, res),
+    await logAlways(req, res);
   next();
 };
 
@@ -62,6 +62,7 @@ const printLog = async (req, res) => {
 };
 
 const saveLog = async (text) => {
+  text += "\n";
   await fs.appendFile("./logs/log.cvs", text);
 };
 export default log;
