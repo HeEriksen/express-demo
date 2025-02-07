@@ -17,9 +17,19 @@ let logInstance = async (req, res, next) => {
   next();
 };
 
-const log = function (logLevel) {
-  currentGlobalLogLevel = logLevel;
+const log = function (loggLevel) {
+  currentGlobalLogLevel = loggLevel;
   return logInstance;
+};
+
+export const eventLogger = function (
+  eventDescription,
+  loggLevel = LOGG_LEVELS.VERBOSE
+) {
+  if (loggLevel >= currentGlobalLogLevel) {
+    console.log(`${Date.now()}|${eventDescription}`);
+    saveLog(`${Date.now()}|${eventDescription}`);
+  }
 };
 
 const colorize = (text) => {
@@ -27,14 +37,17 @@ const colorize = (text) => {
     red: `\x1b[1;31m`,
     green: `\x1b[1;32m`,
     yellow: `\x1b[1;33m`,
+    reset: `\x1b[0m`,
   };
+
   const methods = {
     GET: colors.green,
     POST: colors.red,
     PUT: colors.red,
     PATCH: colors.yellow,
   };
-  return `${methods[text]}${text}`;
+
+  return `${methods[text]}${text}${colors.reset}`;
 };
 
 const logVerbose = async (req, res, next) => {
@@ -57,7 +70,6 @@ const logAlways = async (req, res, next) => {
 
 const printLog = async (req, res) => {
   let logStatement = `${Date.now()}|${colorize(req.method)}|${req.url}`;
-  console.log(logStatement);
   await saveLog(logStatement);
 };
 
@@ -65,4 +77,5 @@ const saveLog = async (text) => {
   text += "\n";
   await fs.appendFile("./logs/log.cvs", text);
 };
+
 export default log;

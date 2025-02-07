@@ -4,7 +4,7 @@ import HTTP_CODES from "./utils/httpCodes.mjs";
 import { quotes, poem } from "./quotes_poem.mjs";
 import { makeNewDeck, shuffleDeck, drawCard } from "./card_functions.mjs";
 import log from "./modules/log.mjs";
-import { LOGG_LEVELS } from "./modules/log.mjs";
+import { LOGG_LEVELS, eventLogger } from "./modules/log.mjs";
 
 const ENABLE_LOGGING = false;
 
@@ -19,14 +19,14 @@ const decks = {};
 server.set("port", port);
 server.use(logger);
 server.use(express.static("public"));
-server.use(express.json());
 
 function getRoot(req, res, next) {
+  eventLogger("Noen spurte etter root");
   res.status(HTTP_CODES.SUCCESS.OK).send("Hello World").end();
 }
+
 server.get("/", getRoot);
 
-// server.use(log);
 
 server.get("/tmp/poem", (req, res) => {
   res.send(poem);
