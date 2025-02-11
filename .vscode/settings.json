@@ -1,0 +1,7 @@
+{
+    "liveServer.settings.port": 8080,
+    "files.exclude": {
+        "public":true,
+        "node_modules":true
+    }
+}
