@@ -1,13 +1,16 @@
-import { Node, Tree, saveTree, inflateTree } from "../data/tree.mjs"
-import fs from "fs/promises"
+import { Node, Tree, saveTree } from "../data/tree.mjs";
+import fs from "fs/promises";
 
 //#region DUMMY data --------------------
 
-let treeData = await fs.readFile("./init/dummy/tree1.json");
+export let treeData = await fs.readFile("./init/dummy/tree1.json", "utf-8");
 console.log(treeData);
 
 //#endregion
 
-
 // Start server ----------
-const server = await import("../server.mjs")
+async function startServer() {
+  const server = await import("../server.mjs");
+}
+
+startServer();
