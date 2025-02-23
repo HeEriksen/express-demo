@@ -1,5 +1,6 @@
 import express from "express";
 import { Tree, Node } from "../data/tree.mjs";
+import { treeData } from "../init/init.mjs";
 const treeRouter = express.Router();
 
 const tree = Tree(Node(""));
