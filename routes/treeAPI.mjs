@@ -1,8 +1,9 @@
 import express from "express";
-import { Tree, Node } from "../data/tree.mjs";
+import { Tree, Node, inflateTree } from "../data/tree.mjs";
+import { treeData } from "../init/init.mjs";
 const treeRouter = express.Router();
 
-const tree = Tree(Node(""));
+const tree = inflateTree(treeData);
 
 
 treeRouter.use(express.json());
