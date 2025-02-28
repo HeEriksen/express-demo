@@ -7,9 +7,9 @@ import { makeNewDeck, shuffleDeck, drawCard } from "./modules/cardDecks.mjs";
 import log from "./modules/log.mjs";
 import { LOGG_LEVELS, eventLogger } from "./modules/log.mjs";
 import abTest from "./modules/abTesting.mjs";
-import treeRouter from './routes/treeAPI.mjs';
-import questLogRouter from './routes/questLogAPI.mjs';
-import userRouter from './routes/userAPI.mjs';
+import treeRouter from "./routes/treeAPI.mjs";
+import questLogRouter from "./routes/questLogAPI.mjs";
+import userRouter from "./routes/userAPI.mjs";
 // // import session from "./modules/sessions.mjs";
 
 const ENABLE_LOGGING = false;
@@ -55,7 +55,6 @@ server.use("/user/", userRouter);
 //     config[req.abVariant]();
 //   };
 // }
-
 
 // server.get("/", ABTestTarget({ A: getRootA, B: getRootB }));
 
@@ -126,4 +125,8 @@ server.get("/temp/deck/:deck_id/card", (req, res) => {
 
 server.listen(server.get("port"), function () {
   console.log("server running", server.get("port"));
+});
+
+server.get("/tmp/jobbquest", (req, res) => {
+  res.status(HTTP_CODES.SUCCESS.OK).send("Hello World").end();
 });
