@@ -55,9 +55,16 @@ server.use("/user/", userRouter);
 // server.get("/", ABTestTarget({ A: getRootA, B: getRootB }));
 
 function getRoot(req, res, next) {
-  eventLogger("Noen spurte etter root");
-  res.status(HTTP_CODES.SUCCESS.OK).send("Hello World").end();
+  const indexPath = path.join(__dirname, 'public', 'index.html');
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      next(err);
+    } else {
+      eventLogger("Noen spurte etter root");
+    }
+  });
 }
+
 
 server.get("/", getRoot);
 
