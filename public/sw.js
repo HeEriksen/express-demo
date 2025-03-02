@@ -2,9 +2,7 @@ const cacheID = "jobbquestV1";
 const contentToCache = [
     "/index.html",
     "/app.mjs",
-    "/icons/career_128.png",
-    "/icons/career_512.png",
-    "/css/styles.css"
+    "/icons/career_128.png"
 ];
 
 self.addEventListener("install", (evt) => {
