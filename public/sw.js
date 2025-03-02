@@ -4,7 +4,7 @@ const contentToCache = [
     "/app.mjs",
     "/icons/career_128.png",
     "/icons/career_512.png",
-    "/css/style.css"
+    "/css/styles.css"
 ];
 
 self.addEventListener("install", (evt) => {
