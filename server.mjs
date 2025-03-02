@@ -2,8 +2,6 @@ import express from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import HTTP_CODES from "./utils/httpCodes.mjs";
-import { quotes, poem } from "./modules/quotes_poem.mjs";
-import { makeNewDeck, shuffleDeck, drawCard } from "./modules/cardDecks.mjs";
 import log from "./modules/log.mjs";
 import { LOGG_LEVELS, eventLogger } from "./modules/log.mjs";
 import abTest from "./modules/abTesting.mjs";
@@ -18,8 +16,6 @@ const server = express();
 const port = process.env.PORT || 8080;
 const __dirname = path.resolve();
 const logger = log(LOGG_LEVELS.VERBOSE);
-
-const decks = {};
 
 server.set("port", port);
 server.use(cookieParser());
