@@ -26,11 +26,16 @@ self.addEventListener('fetch', (evt) => {
     evt.respondWith((async () => {
         const r = await caches.match(evt.request);
         console.log(`[Service Worker] Fetching resource: ${evt.request.url}`);
-        if (r) { return r };
-        const response = await fetch(evt.request);
-        const cache = await caches.open(cacheID);
-        console.log(`[Service Worker] Caching new resource: ${evt.request.url}`);
-        cache.put(evt.request, response.clone());
-        return response;
+        if (r) { return r; }
+        try {
+            const response = await fetch(evt.request);
+            const cache = await caches.open(cacheID);
+            console.log(`[Service Worker] Caching new resource: ${evt.request.url}`);
+            cache.put(evt.request, response.clone());
+            return response;
+        } catch (error) {
+            console.error(`[Service Worker] Fetch failed for: ${evt.request.url}`, error);
+            throw error;
+        }
     })());
 });
