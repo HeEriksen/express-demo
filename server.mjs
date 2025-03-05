@@ -5,9 +5,7 @@ import HTTP_CODES from "./utils/httpCodes.mjs";
 import log from "./modules/log.mjs";
 import { LOGG_LEVELS, eventLogger } from "./modules/log.mjs";
 import abTest from "./modules/abTesting.mjs";
-import treeRouter from "./routes/treeAPI.mjs";
-import questLogRouter from "./routes/questLogAPI.mjs";
-import userRouter from "./routes/userAPI.mjs";
+import workoutsRouter from "./routes/workoutsAPI.mjs";
 // // import session from "./modules/sessions.mjs";
 
 const ENABLE_LOGGING = false;
@@ -22,9 +20,7 @@ server.use(cookieParser());
 server.use(logger);
 server.use(abTest);
 server.use(express.static("public"));
-server.use("/tree/", treeRouter);
-server.use("/quest/", questLogRouter);
-server.use("/user/", userRouter);
+server.use("/workout/", workoutsRouter);
 
 // TODO: flytt ab-test relaterte funksjoner ut i modul-mappe der det er mulig
 

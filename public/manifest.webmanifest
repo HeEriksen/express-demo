@@ -1,16 +1,16 @@
 {
-    "name" : "Jobbquest",
+    "name" : "LoadUp",
     "start_url":"/",
     "display": "standalone",
     "background-color": "#f0f0f0",
     "icons": [
         {
-            "src": "icons/career_128.png",
+            "src": "icons/training_128.png",
             "type": "image/png",
             "sizes": "128x128"
         },
         {
-            "src": "icons/career_512.png",
+            "src": "icons/training_512.png",
             "type": "image/png",
             "sizes": "512x512"
         }
