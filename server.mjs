@@ -20,7 +20,7 @@ server.use(cookieParser());
 server.use(logger);
 server.use(abTest);
 server.use(express.static("public"));
-server.use("/workout/", workoutsRouter);
+server.use("/workouts/", workoutsRouter);
 
 // TODO: flytt ab-test relaterte funksjoner ut i modul-mappe der det er mulig
 
@@ -61,8 +61,8 @@ function getRoot(req, res, next) {
   });
 }
 
-
 server.get("/", getRoot);
+
 
 server.listen(server.get("port"), function () {
   console.log("server running", server.get("port"));
