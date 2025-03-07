@@ -1,8 +1,10 @@
-const cacheID = "jobbquestV1";
+const cacheID = "loadUpV1";
 const contentToCache = [
     "/index.html",
+    "/styles.css",
     "/app.mjs",
-    "/icons/career_128.png"
+    "/icons/training_128.png",
+    "/icons/training_512.png"
 ];
 
 self.addEventListener("install", (evt) => {
