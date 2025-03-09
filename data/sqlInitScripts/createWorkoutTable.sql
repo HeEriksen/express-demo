@@ -1,0 +1,5 @@
+CREATE TABLE "public"."Workout" (
+    "id" integer GENERATED ALWAYS AS IDENTITY,
+    "date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY ("id")
+);
