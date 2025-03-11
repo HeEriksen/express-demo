@@ -19,7 +19,7 @@ async function read(statement, ...values) {
     return await runQuery(statement, ...values);
 }
 
-async function remove(statement, ...values) {
+async function purge(statement, ...values) {
     return await runQuery(statement, ...values);
 }
 
@@ -44,3 +44,7 @@ async function runQuery(query, ...values) {
     client.close();
   }
 }
+
+const DbManager = { create, update, read, purge };
+
+export default DbManager;
