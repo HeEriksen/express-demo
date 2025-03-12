@@ -17,6 +17,7 @@ const logger = log(LOGG_LEVELS.VERBOSE);
 
 server.set("port", port);
 server.use(cookieParser());
+server.use(express.json());
 server.use(logger);
 server.use(abTest);
 server.use(express.static("public"));
@@ -49,20 +50,6 @@ server.use("/workouts/", workoutsRouter);
 // }
 
 // server.get("/", ABTestTarget({ A: getRootA, B: getRootB }));
-
-function getRoot(req, res, next) {
-  const indexPath = path.join(__dirname, 'public', 'index.html');
-  res.sendFile(indexPath, (err) => {
-    if (err) {
-      next(err);
-    } else {
-      eventLogger("Noen spurte etter root");
-    }
-  });
-}
-
-server.get("/", getRoot);
-
 
 server.listen(server.get("port"), function () {
   console.log("server running", server.get("port"));
