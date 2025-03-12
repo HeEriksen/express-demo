@@ -1,3 +1,6 @@
+import exerciseViewController from "./controller/exerciseView.mjs"
+
+
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js").then(
       (registration) => {
@@ -11,3 +14,6 @@ if ("serviceWorker" in navigator) {
     console.error("Service workers are not supported.");
   }
   
+console.log(exerciseViewController);
+
+document.body.append(exerciseViewController.view);
