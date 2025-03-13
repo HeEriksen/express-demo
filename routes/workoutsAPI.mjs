@@ -18,31 +18,39 @@ workoutsRouter.get("/", async (req, res, next) => {
 
 workoutsRouter.post("/", async (req, res, next) => {
   try {
-    const newWorkout = new Workout(
-      null,
-      uuidv4(),
-      req.body.date,
-      req.body.exercises || []
-    );
-    const createdWorkout = await newWorkout.create();
-    res.status(HTTP_CODES.SUCCESS.CREATED).json(createdWorkout);
-  } catch (error) {
-    next(error);
-  }
-});
+    const { id, date, exercises } = req.body;
+    let workout;
+    let statusCode = HTTP_CODES.SUCCESS.OK;
 
-workoutsRouter.put("/:id", async (req, res, next) => {
-  try {
-    let workout = new Workout(null, req.params.id)
-    workout = await workout.read();
-    workout.date = req.body.date || workout.date;
-    workout.workout = req.body.exercises || workout.workout;
-    const updatedWorkout = await workout.update();
-    res.json(updatedWorkout);
-  } catch (error) {
-    next(error);
-  }
-});
+    if (id) {
+      workout = new Workout(null, id);
+      try {
+        workout = await workout.read();
+        workout.date = date || workout.date;
+        workout.workout = exercises || workout.workout;
+        workout = await workout.update();
+      } catch (error) {
+        return res
+          .status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND)
+          .json({ error: `Workout with id ${id} not found` });
+      }
+    } else {
+      const pwa_id = uuidv4();
+      workout = new Workout(
+        pwa_id,
+        null,
+        date || new Date(),
+        exercises || []
+      );
+    
+      workout = await workout.create();
+          statusCode = HTTP_CODES.SUCCESS.CREATED;
+        }
+        res.status(statusCode).json(workout);
+      } catch (error) {
+        next(error);
+      }
+    });
 
 workoutsRouter.delete("/:id", async (req, res, next) => {
   try {
