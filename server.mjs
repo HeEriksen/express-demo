@@ -6,6 +6,8 @@ import log from "./modules/log.mjs";
 import { LOGG_LEVELS, eventLogger } from "./modules/log.mjs";
 import abTest from "./modules/abTesting.mjs";
 import workoutsRouter from "./routes/workoutsAPI.mjs";
+
+
 // // import session from "./modules/sessions.mjs";
 
 const ENABLE_LOGGING = false;
@@ -20,9 +22,9 @@ server.use(cookieParser());
 server.use(express.json());
 server.use(logger);
 server.use(abTest);
-server.use(express.static("public"));
-server.use("/workouts/", workoutsRouter);
 
+server.use("/api/workouts", workoutsRouter);
+server.use(express.static("public"));
 // TODO: flytt ab-test relaterte funksjoner ut i modul-mappe der det er mulig
 
 // function getRootA(req, res, next) {
