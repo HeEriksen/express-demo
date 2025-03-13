@@ -1,4 +1,4 @@
-import exerciseViewController from "./controller/exerciseView.mjs"
+import WorkoutManager from "./modules/workoutManager.mjs";
 
 
 if ("serviceWorker" in navigator) {
@@ -13,7 +13,22 @@ if ("serviceWorker" in navigator) {
   } else {
     console.error("Service workers are not supported.");
   }
-  
-console.log(exerciseViewController);
 
-document.body.append(exerciseViewController.view);
+const exerciseUI = document.getElementById("exercise");
+const repetitionsUI = document.getElementById("repetitions");
+const weightUI = document.getElementById("weight");
+
+const addExerciseButton = document.getElementById("addExerciseBtn");
+const newWorkoutButton = document.getElementById("newWorkoutBtn");
+
+newWorkoutButton.onclick = (evt) => {
+    WorkoutManager.newWorkout();
+}
+
+addExerciseButton.onclick = (evt) => {
+    let exerciseName = exerciseUI.selectedOptions[0].getAttribute("data-exercise");
+    let repetitions = repetitionsUI.value;
+    let weight = weightUI.value;
+
+    WorkoutManager.add(exerciseName, repetitions, weight);
+}
