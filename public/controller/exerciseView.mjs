@@ -9,7 +9,7 @@
 //     console.log("Yesss");
 // }
 
-// exeerciseViewController = {
+// exerciseViewController = {
 //     view: exerciseView
 // };
 
