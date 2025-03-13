@@ -1,17 +1,16 @@
-
-
-function RecordStoreAbstractInterface(){
-    return {
-        create, 
-        read, 
-        update, 
-        purge
-    }
+class RecordStoreAbstractInterface {
+  create(workout) {
+    throw Error("Not implemented");
+  }
+  read(workout) {
+    throw Error("Not implemented");
+  }
+  update(workout) {
+    throw Error("Not implemented");
+  }
+  purge(workout) {
+    throw Error("Not implemented");
+  }
 }
-
-function create(id){ throw Error("Not implemented") }
-function read(workout){ throw Error("Not implemented") }
-function update(workout){ throw Error("Not implemented") }
-function purge(workout){ throw Error("Not implemented") }
 
 export default RecordStoreAbstractInterface;
