@@ -17,40 +17,62 @@ workoutsRouter.get("/", async (req, res, next) => {
 });
 
 workoutsRouter.post("/", async (req, res, next) => {
+  console.log("POST /api/workouts ble kalt med body:", req.body);
   try {
-    const { id, date, exercises } = req.body;
-    let workout;
-    let statusCode = HTTP_CODES.SUCCESS.OK;
+    const { pwa_id, workout } = req.body;
 
-    if (id) {
-      workout = new Workout(null, id);
-      try {
-        workout = await workout.read();
-        workout.date = date || workout.date;
-        workout.workout = exercises || workout.workout;
-        workout = await workout.update();
-      } catch (error) {
-        return res
-          .status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND)
-          .json({ error: `Workout with id ${id} not found` });
-      }
+    if (!pwa_id) {
+      return res
+        .status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND)
+        .json({ error: "pwa_id mangler" });
+    }
+
+    const workoutId = uuidv4();
+    const newWorkout = new Workout(
+      pwa_id,
+      workoutId,
+      new Date(),
+      workout || []
+    );
+    const result = await newWorkout.create();
+
+    if (result) {
+      res.status(HTTP_CODES.SUCCESS.CREATED).json(result);
     } else {
-      const pwa_id = uuidv4();
-      workout = new Workout(
-        pwa_id,
-        null,
-        date || new Date(),
-        exercises || []
-      );
-    
-      workout = await workout.create();
-          statusCode = HTTP_CODES.SUCCESS.CREATED;
-        }
-        res.status(statusCode).json(workout);
-      } catch (error) {
-        next(error);
-      }
-    });
+      res
+        .status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND)
+        .json({ error: "Kunne ikke opprette treningsøkt" });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+workoutsRouter.put("/:id", async (req, res, next) => {
+  try {
+    const workoutId = req.params.id;
+    const { pwa_id, workout } = req.body;
+
+    const updatedWorkout = new Workout(
+      pwa_id,
+      workoutId,
+      req.body.date ? new Date(req.body.date) : new Date(),
+      workout || []
+    );
+
+    const result = await updatedWorkout.update();
+
+    if (result) {
+      res.status(HTTP_CODES.SUCCESS.OK).json(result);
+    } else {
+      res
+        .status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND)
+        .json({ error: "Kunne ikke oppdatere treningsøkt" });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 workoutsRouter.delete("/:id", async (req, res, next) => {
   try {
