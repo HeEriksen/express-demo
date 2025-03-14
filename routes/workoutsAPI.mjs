@@ -2,17 +2,19 @@ import express from "express";
 import HTTP_CODES from "../utils/httpCodes.mjs";
 import { v4 as uuidv4 } from "uuid";
 import Workout from "../data/workout.mjs";
+import WorkoutStore from "../data/workoutsRecordStore.mjs";
 
 const workoutsRouter = express.Router();
-
+const storageHandler = new WorkoutStore();
 workoutsRouter.use(express.json());
 
 workoutsRouter.get("/", async (req, res, next) => {
   try {
-    const workouts = await new Workout().read();
-    res.json(workouts);
+    const workouts = await storageHandler.getAll();
+    res.status(HTTP_CODES.SUCCESS.OK).json(workouts);
   } catch (error) {
-    next(error);
+    console.error("Feil ved henting av workouts:", error);
+    res.status(HTTP_CODES.SERVER_ERROR.INTERNAL_SERVER_ERROR).json({ error: "Kunne ikke hente workouts" });
   }
 });
 
