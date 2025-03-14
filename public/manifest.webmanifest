@@ -5,12 +5,12 @@
     "background-color": "#f0f0f0",
     "icons": [
         {
-            "src": "icons/training_128.png",
+            "src": "Icons/training_128.png",
             "type": "image/png",
             "sizes": "128x128"
         },
         {
-            "src": "icons/training_512.png",
+            "src": "Icons/training_512.png",
             "type": "image/png",
             "sizes": "512x512"
         }

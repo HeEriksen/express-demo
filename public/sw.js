@@ -3,8 +3,8 @@ const contentToCache = [
   "/index.html",
   "/styles.css",
   "/app.mjs",
-  "/icons/training_128.png",
-  "/icons/training_512.png",
+  "/Icons/training_128.png",
+  "/Icons/training_512.png",
 ];
 
 self.addEventListener("install", (evt) => {
