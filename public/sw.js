@@ -1,10 +1,11 @@
-const cacheID = "loadUpV2";
+const cacheID = "loadUpV3";
 const contentToCache = [
   "/index.html",
   "/styles.css",
   "/app.mjs",
   "/Icons/training_128.png",
   "/Icons/training_512.png",
+  "/views/fallbackView.html",
 ];
 
 self.addEventListener("install", (evt) => {
@@ -34,28 +35,24 @@ self.addEventListener("fetch", (evt) => {
     return fetch(evt.request);
   }
 
-  evt.respondWith(
-    (async () => {
-      const cachedResponse = await caches.match(evt.request);
-      console.log(`[Service Worker] Fetching resource: ${evt.request.url}`);
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      try {
-        const response = await fetch(evt.request);
-        const cache = await caches.open(cacheID);
-        console.log(
-          `[Service Worker] Caching new resource: ${evt.request.url}`
-        );
-        cache.put(evt.request, response.clone());
-        return response;
-      } catch (error) {
-        console.error(
-          `[Service Worker] Fetch failed for: ${evt.request.url}`,
-          error
-        );
-        throw error;
-      }
-    })()
-  );
+  evt.respondWith(async () => {
+    const cachedResponse = await caches.match(evt.request);
+    console.log(`[Service Worker] Fetching resource: ${evt.request.url}`);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    try {
+      const response = await fetch(evt.request);
+      const cache = await caches.open(cacheID);
+      console.log(`[Service Worker] Caching new resource: ${evt.request.url}`);
+      cache.put(evt.request, response.clone());
+      return response;
+    } catch (error) {
+      console.error(
+        `[Service Worker] Fetch failed for: ${evt.request.url}`,
+        error
+      );
+      throw error;
+    }
+  });
 });
