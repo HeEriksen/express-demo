@@ -2,7 +2,15 @@ import RecordStoreAbstractInterface from "./recordStoreInterface.mjs";
 import DbManager from "./db.mjs";
 
 class WorkoutStore extends RecordStoreAbstractInterface {
+  
+  async getAll() {
+    return DbManager.read(
+      `SELECT pwa_id, id, "when", workout FROM public.workouts;`
+    );
+  }
+
   create(workout) {
+    console.log("create() i WorkoutStore kalles med: ", workout);
     return DbManager.create(
       `INSERT INTO "public"."workouts"("pwa_id", "when", "workout")
    VALUES ($1, $2, $3)

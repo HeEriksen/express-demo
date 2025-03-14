@@ -5,23 +5,21 @@ const HTTP_METHODS = {
   PUT: "PUT",
 };
 
-const isPROD = true;
+const isPROD = false;
 const BASE_API_TEST = "http://localhost:8080/";
 const BASE_API_PROD = "https://express-demo-b43z.onrender.com/";
 
 const BASE_API = isPROD ? BASE_API_PROD : BASE_API_TEST;
 
 const API_ENDPOINTS_TRAINING_SERVER = {
-  GetWorkouts: `${BASE_API}api/workouts`,
+  GetAllWorkouts: `${BASE_API}api/workouts`,
   CreateWorkout: `${BASE_API}api/workouts`,
   UpdateWorkout: (id) => `${BASE_API}api/workouts/${id}`,
   DeleteWorkout: (id) => `${BASE_API}api/workouts/${id}`,
 };
 
-async function getWorkouts(pwaID) {
-  const workout = await runRequest(
-    API_ENDPOINTS_TRAINING_SERVER.GetWorkouts(pwaID)
-  );
+async function getAllWorkouts() {
+    return await runRequest(API_ENDPOINTS_TRAINING_SERVER.GetAllWorkouts);
 }
 
 async function addWorkout(workout) {
@@ -74,7 +72,7 @@ console.log(`API is running ${isPROD ? "PROD" : "Test"} `);
 export {
   HTTP_METHODS,
   API_ENDPOINTS_TRAINING_SERVER,
-  getWorkouts,
+  getAllWorkouts,
   addWorkout,
   updateWorkout,
   deleteWorkout,
