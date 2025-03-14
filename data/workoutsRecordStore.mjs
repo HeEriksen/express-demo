@@ -9,14 +9,14 @@ class WorkoutStore extends RecordStoreAbstractInterface {
    RETURNING "pwa_id", "id", "when", "workout";`,
       workout.pwa_id,
       workout.date,
-      workout.workout
+      JSON.stringify(workout.workout)
     );
   }
 
   read(workout) {
     return DbManager.read(
       `SELECT pwa_id, id, "when", workout
-	FROM public.workouts;
+    FROM public.workouts
         WHERE id = $1;`,
       workout.id
     );
@@ -27,11 +27,11 @@ class WorkoutStore extends RecordStoreAbstractInterface {
       `UPDATE public.workouts
         SET "pwa_id" = $1, "id" = $2, "when" = $3, "workout" = $4
         WHERE id = $5
-        NG "pwa_id", "id", "when", "workout";`,
+        RETURNING "pwa_id", "id", "when", "workout";`,
       workout.pwa_id,
       workout.id,
       workout.date,
-      workout.workout,
+      JSON.stringify(workout.workout),
       workout.id
     );
   }
@@ -40,7 +40,7 @@ class WorkoutStore extends RecordStoreAbstractInterface {
     return DbManager.purge(
       `DELETE FROM public.workouts
        WHERE id = $1
-       NG *;`,
+       RETURNING *;`,
       workout.id
     );
   }
