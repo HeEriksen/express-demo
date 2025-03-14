@@ -6,6 +6,8 @@ import log from "./modules/log.mjs";
 import { LOGG_LEVELS, eventLogger } from "./modules/log.mjs";
 import abTest from "./modules/abTesting.mjs";
 import workoutsRouter from "./routes/workoutsAPI.mjs";
+
+
 // // import session from "./modules/sessions.mjs";
 
 const ENABLE_LOGGING = false;
@@ -17,11 +19,12 @@ const logger = log(LOGG_LEVELS.VERBOSE);
 
 server.set("port", port);
 server.use(cookieParser());
+server.use(express.json());
 server.use(logger);
 server.use(abTest);
-server.use(express.static("public"));
-server.use("/workouts/", workoutsRouter);
 
+server.use("/api/workouts", workoutsRouter);
+server.use(express.static("public"));
 // TODO: flytt ab-test relaterte funksjoner ut i modul-mappe der det er mulig
 
 // function getRootA(req, res, next) {
@@ -49,20 +52,6 @@ server.use("/workouts/", workoutsRouter);
 // }
 
 // server.get("/", ABTestTarget({ A: getRootA, B: getRootB }));
-
-function getRoot(req, res, next) {
-  const indexPath = path.join(__dirname, 'public', 'index.html');
-  res.sendFile(indexPath, (err) => {
-    if (err) {
-      next(err);
-    } else {
-      eventLogger("Noen spurte etter root");
-    }
-  });
-}
-
-server.get("/", getRoot);
-
 
 server.listen(server.get("port"), function () {
   console.log("server running", server.get("port"));
