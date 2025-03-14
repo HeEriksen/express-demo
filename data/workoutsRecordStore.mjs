@@ -39,8 +39,7 @@ class WorkoutStore extends RecordStoreAbstractInterface {
       workout.pwa_id,
       workout.id,
       workout.date,
-      JSON.stringify(workout.workout),
-      workout.id
+      JSON.stringify(workout.workout)
     );
   }
 
