@@ -9,20 +9,22 @@ if (!pwa_id) {
   localStorage.setItem("pwa_id", pwa_id);
 }
 
-let currentWorkout = JSON.parse(localStorage.getItem(CURRENT_WORKOUT));
-
-if (!currentWorkout) {
-  currentWorkout = await newWorkout();
-}
+let currentWorkout = JSON.parse(localStorage.getItem(CURRENT_WORKOUT)) || {
+  pwa_id,
+  workout: [],
+};
 
 async function saveWorkout(workout) {
   try {
     let updatedWorkout;
+
     if (workout.id) {
       updatedWorkout = await updateWorkout(workout.id, workout);
     } else {
       updatedWorkout = await addWorkout(workout);
+      workout.id = updatedWorkout.id;
     }
+
     localStorage.setItem(CURRENT_WORKOUT, JSON.stringify(updatedWorkout));
     return updatedWorkout;
   } catch (error) {
@@ -32,29 +34,22 @@ async function saveWorkout(workout) {
   }
 }
 
-async function newWorkout() {
-  const workout = { pwa_id, workout: [] };
-  const newWorkoutFromServer = await saveWorkout(workout);
-  currentWorkout = newWorkoutFromServer;
-  return currentWorkout;
-}
+WorkoutManager.newWorkout = function () {
+  currentWorkout = { pwa_id, workout: [] };
+  localStorage.setItem(CURRENT_WORKOUT, JSON.stringify(currentWorkout));
+};
 
-function addExerciseToWorkout(name, reps, weight) {
+WorkoutManager.add = function (name, reps, weight) {
   if (!currentWorkout) {
     console.error("Ingen gjeldende treningsøkt funnet.");
     return;
   }
 
-  if (!Array.isArray(currentWorkout.workout)) {
-    currentWorkout.workout = [];
-  }
-
   currentWorkout.workout.push({ name, reps, weight });
-  currentWorkout.pwa_id = pwa_id;
   saveWorkout(currentWorkout);
-}
+};
 
-WorkoutManager.add = addExerciseToWorkout;
-WorkoutManager.newWorkout = newWorkout;
-
+WorkoutManager.getAll = async function () {
+  return await getAllWorkouts();
+};
 export default WorkoutManager;
