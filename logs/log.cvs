@@ -1,0 +1,8 @@
+1741938234251|[1;31mPOST[0m|/api/workouts
+1741938287968|[1;32mGET[0m|/api/workouts
+1741938299857|[1;31mPOST[0m|/api/workouts
+1741938345648|[1;31mPUT[0m|//api/workouts/:id
+1741938357863|[1;31mPUT[0m|//api/workouts/c80ed117-e7e7-486d-81cd-6ccc937ff2a5
+1741938368069|[1;31mPUT[0m|//api/workouts/1
+1741938378208|[1;31mPUT[0m|//api/workouts/:id
+1741938398302|undefinedDELETE[0m|//api/workouts/:id
