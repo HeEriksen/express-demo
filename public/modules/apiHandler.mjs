@@ -5,7 +5,7 @@ const HTTP_METHODS = {
   PUT: "PUT",
 };
 
-const isPROD = true;
+const isPROD = false;
 const BASE_API_TEST = "http://localhost:8080/";
 const BASE_API_PROD = "https://express-demo-b43z.onrender.com/";
 
