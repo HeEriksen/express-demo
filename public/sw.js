@@ -1,4 +1,4 @@
-const cacheID = "loadUpV3";
+const cacheID = "loadUpV1";
 const contentToCache = [
   "/index.html",
   "/styles.css",
@@ -35,24 +35,28 @@ self.addEventListener("fetch", (evt) => {
     return fetch(evt.request);
   }
 
-  evt.respondWith(async () => {
-    const cachedResponse = await caches.match(evt.request);
-    console.log(`[Service Worker] Fetching resource: ${evt.request.url}`);
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-    try {
-      const response = await fetch(evt.request);
-      const cache = await caches.open(cacheID);
-      console.log(`[Service Worker] Caching new resource: ${evt.request.url}`);
-      cache.put(evt.request, response.clone());
-      return response;
-    } catch (error) {
-      console.error(
-        `[Service Worker] Fetch failed for: ${evt.request.url}`,
-        error
-      );
-      throw error;
-    }
-  });
+  evt.respondWith(
+    (async () => {
+      const cachedResponse = await caches.match(evt.request);
+      console.log(`[Service Worker] Fetching resource: ${evt.request.url}`);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      try {
+        const response = await fetch(evt.request);
+        const cache = await caches.open(cacheID);
+        console.log(
+          `[Service Worker] Caching new resource: ${evt.request.url}`
+        );
+        cache.put(evt.request, response.clone());
+        return response;
+      } catch (error) {
+        console.error(`[Service Worker] Fetch failed for: ${evt.request.url}`);
+
+        //TODO: implementer offline fallback hvis det er tid
+        // const fallbackResponse = await caches.match("/fallbackView.html"); 
+        // return fallbackResponse;
+      }
+    })()
+  );
 });

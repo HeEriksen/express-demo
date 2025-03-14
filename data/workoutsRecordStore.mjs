@@ -2,7 +2,6 @@ import RecordStoreAbstractInterface from "./recordStoreInterface.mjs";
 import DbManager from "./db.mjs";
 
 class WorkoutStore extends RecordStoreAbstractInterface {
-  
   async getAll() {
     return DbManager.read(
       `SELECT pwa_id, id, "when", workout FROM public.workouts;`
@@ -33,13 +32,13 @@ class WorkoutStore extends RecordStoreAbstractInterface {
   update(workout) {
     return DbManager.update(
       `UPDATE public.workouts
-        SET "pwa_id" = $1, "id" = $2, "when" = $3, "workout" = $4
-        WHERE id = $5
-        RETURNING "pwa_id", "id", "when", "workout";`,
+           SET "pwa_id" = $1, "when" = $2, "workout" = $3
+           WHERE id = $4
+           RETURNING "pwa_id", "id", "when", "workout";`,
       workout.pwa_id,
-      workout.id,
       workout.date,
-      JSON.stringify(workout.workout)
+      JSON.stringify(workout.workout),
+      workout.id
     );
   }
 

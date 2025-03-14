@@ -12,9 +12,9 @@ class Workout {
 
   async create() {
     const record = await storageHandler.create(this);
-    this.pwa_id = record.pwa_id;
     this.id = record.id;
-    this.date = record.date;
+    this.pwa_id = record.pwa_id;
+    this.date = record.when;
     this.workout = record.workout;
     return this;
   }
