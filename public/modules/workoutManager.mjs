@@ -34,7 +34,9 @@ async function saveWorkout(workout) {
 
 async function newWorkout() {
   const workout = { pwa_id, workout: [] };
-  return await saveWorkout(workout);
+  const newWorkoutFromServer = await saveWorkout(workout);
+  currentWorkout = newWorkoutFromServer;
+  return currentWorkout;
 }
 
 function addExerciseToWorkout(name, reps, weight) {
@@ -46,7 +48,7 @@ function addExerciseToWorkout(name, reps, weight) {
   if (!Array.isArray(currentWorkout.workout)) {
     currentWorkout.workout = [];
   }
-  
+
   currentWorkout.workout.push({ name, reps, weight });
   currentWorkout.pwa_id = pwa_id;
   saveWorkout(currentWorkout);
