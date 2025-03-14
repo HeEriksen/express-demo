@@ -1,3 +1,3 @@
 SELECT pwa_id, id, "when", workout
-	FROM public.workouts;
+	FROM public.workouts
         WHERE id = $1;
